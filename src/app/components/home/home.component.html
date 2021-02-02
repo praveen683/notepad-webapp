@@ -5,7 +5,10 @@
             <mat-card-title>Notepad Application</mat-card-title>
             <span class="spacer"></span>
             <div class="example-button-row">
-                <button mat-stroked-button>Add New Notepad
+                <button mat-stroked-button (click)="addNotepad()">Add New Notepad
+                    <span class="material-icons">
+                        note_add
+                    </span>
                 </button>
             </div>
         </mat-toolbar>
