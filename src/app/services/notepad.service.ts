@@ -12,8 +12,24 @@ export class NotepadService {
     return new Octokit({ auth: `1bd0f30a36d2f1c43573134a9b34c7fe30b1ae34` });
   }
 
-  getData() {
+  getData(id) {
     const octokit = this.getOctoKit();
-    return octokit.request('GET /gists/9cb09ea53c3e40c2f6dfbb2c12c88cb7');
+    return octokit.request(`GET /gists/${id}`);
+  }
+  
+  updateData(id, reqBody) {
+    const octokit = this.getOctoKit();
+    return octokit.request(`PATCH /gists/${id}`, reqBody);
+  }
+
+  createGist(reqBody) {
+    const octokit = this.getOctoKit();
+    return octokit.request('POST /gists', reqBody)
+  }
+
+  
+  getAllGist() {
+    const octokit = this.getOctoKit();
+    return octokit.request('GET /users/praveen683/gists')
   }
 }
