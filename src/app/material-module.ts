@@ -3,6 +3,7 @@ import { A11yModule } from '@angular/cdk/a11y';
 // Other
 import { NgModule } from '@angular/core';
 // Material
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,6 +16,7 @@ const CDK_MODULES = [
 ];
 
 const MATERIAL_MODULES = [
+  MatButtonModule,
   MatCardModule,
   MatDividerModule,
   MatIconModule,
