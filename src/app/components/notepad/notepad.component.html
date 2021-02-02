@@ -26,5 +26,37 @@
                 </div>
             </div>
         </form>
+
+        <form [formGroup]="notesForm" #notesFormDirective="ngForm">
+            <mat-card-content>
+                <h3>My Notes</h3>
+                <div fxLayout.xs="column" fxLayout="row wrap" fxLayoutGap="10px" ngClass.gt-xs="ml-10">
+                    <div fxFlex.sm="0 1 calc(50%-10px)" fxFlex.md="0 1 calc(33%-10px)"
+                        fxFlex.gt-md="0 1 calc(50%-10px)">
+                        <div>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Enter note title</mat-label>
+                                <input matInput formControlName="title" placeholder="Enter note title..." required />
+                                <mat-error class="error-message">{{ getFormErrorMessage(notesForm, 'title') }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Enter Note</mat-label>
+                                <textarea matInput formControlName="text" placeholder="Enter note..."
+                                    required></textarea>
+                                <mat-error class="error-message">{{ getFormErrorMessage(notesForm, 'text') }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <button mat-button type="text" class="bt-add"
+                            title="Add note" [disabled]="!notesForm.valid" aria-label="Add note">
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </mat-card-content>
+        </form>
     </mat-card>
 </div>
