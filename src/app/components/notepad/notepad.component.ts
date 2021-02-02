@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { getFieldErrorMessage } from '../../utils/utilities';
 import { Custom_Validation_Messages } from './validation-messages';
 import { NotepadService } from '../../services/notepad.service'
@@ -10,13 +10,19 @@ import { NotepadService } from '../../services/notepad.service'
 })
 export class NotepadComponent implements OnInit {
   notepadForm: FormGroup;
+  notesForm: FormGroup;
   custom_validation_messages = Custom_Validation_Messages;
 
   constructor(private fb: FormBuilder,private notepadService: NotepadService) { }
 
   ngOnInit(): void {
     this.notepadForm = this.fb.group({
-      name: [''],
+      name: ['', Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(255)])],
+    });
+
+    this.notesForm = this.fb.group({
+      title: ['', Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(255)])],
+      text: ['', Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(1000)])],
     });
   }
 
