@@ -8,11 +8,13 @@ import { NotepadComponent } from './components/notepad/notepad.component';
 import { MaterialModule } from './material-module'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NotepadComponent
+    NotepadComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
