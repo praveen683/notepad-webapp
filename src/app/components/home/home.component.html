@@ -3,12 +3,16 @@
         <mat-toolbar class="m-10">
             <mat-card-title>Notepad Application</mat-card-title>
             <span class="spacer"></span>
-            <div class="example-button-row">
-                <button mat-stroked-button (click)="addNotepad()">Add New Notepad
-                    <span class="material-icons">
-                        note_add
-                    </span>
-                </button>
+            <div fxLayout.xs="column" fxLayout="row wrap" fxLayoutGap="10px" ngClass.gt-xs="ml-10">
+                <div fxFlex.sm="0 1 calc(50%-10px)" fxFlex.md="0 1 calc(33%-10px)" fxFlex.gt-md="0 1 calc(50%-10px)">
+                    <div class="example-button-row">
+                        <button mat-stroked-button (click)="addNotepad()">Add New Notepad
+                            <span class="material-icons">
+                                note_add
+                            </span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </mat-toolbar>
     </div>

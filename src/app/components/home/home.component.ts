@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationExtras, Router } from '@angular/router';
 import { NotepadService } from 'src/app/services/notepad.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,13 @@ export class HomeComponent implements OnInit {
   gistAllFiles;
   objectValues = Object.values;
 
-  constructor(private router: Router, private notepadService: NotepadService) { }
+  constructor(private router: Router, private notepadService: NotepadService, private localStorageService: LocalStorageService) {
+    let res = this.localStorageService.getAllGistData();
+    if (res) {
+      this.gistAllFiles = res.data;
+      this.parseNotePads(this.gistAllFiles);
+    }
+  }
 
   ngOnInit(): void {
     this.allGist();
@@ -28,6 +35,8 @@ export class HomeComponent implements OnInit {
 
   async allGist() {
     let res = await this.notepadService.getAllGist();
+    this.notePads = [];
+    this.localStorageService.setAllGistData(res);
     this.gistAllFiles = res.data;
     this.parseNotePads(this.gistAllFiles);
   }

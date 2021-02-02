@@ -5,6 +5,7 @@ import { Custom_Validation_Messages } from './validation-messages';
 import { NotepadService } from '../../services/notepad.service'
 import { v1 as uuidv1 } from 'uuid';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
   selector: 'app-notepad',
@@ -20,7 +21,7 @@ export class NotepadComponent implements OnInit {
   currentNavState;
   notepadId;
 
-  constructor(private fb: FormBuilder, private notepadService: NotepadService, private router: Router, private route: ActivatedRoute) {
+  constructor(private fb: FormBuilder, private notepadService: NotepadService, private router: Router, private route: ActivatedRoute, private localStorageService: LocalStorageService) {
     this.currentNavState = this.router.getCurrentNavigation() && this.router.getCurrentNavigation().extras && this.router.getCurrentNavigation().extras.state;
     this.route.queryParams.subscribe(params => {
       console.log(params);
@@ -43,21 +44,33 @@ export class NotepadComponent implements OnInit {
     });
 
     if (this.notepadId) {
+      let res = this.localStorageService.getGistDataById(this.notepadId);
+      if(res) {
+        this.parseGistData(res);
+      }
       this.getGistData(this.notepadId);
     }
   }
 
   async getGistData(id) {
     const response = await this.notepadService.getData(id);
+    this.localStorageService.setGistDataById(id, response);
+    if(this.notesArray.controls.length > 0 ) {
+      this.notesArray.controls.forEach((ele , i) => {
+        this.removeNoteFromArray(i)
+      });
+    }
+    this.parseGistData(response);
+  }
+
+  parseGistData(response) {
     if (response.data.files && Object.values(response.data.files)) {
       let gistVal: any = Object.values(response.data.files)[0];
       this.notepadData = gistVal.content && JSON.parse(gistVal.content).notes;
       let notePadName = gistVal.content && JSON.parse(gistVal.content).name;
-
       for (let note of this.notepadData) {
         this.addNotetoArray(note);
       }
-
       this.notepadForm.patchValue({
         name: notePadName
       });
