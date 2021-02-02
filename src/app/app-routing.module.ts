@@ -14,7 +14,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/notepad',
+    redirectTo: '/home',
     pathMatch: 'full'
   }
 ];

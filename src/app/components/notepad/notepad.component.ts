@@ -84,10 +84,6 @@ export class NotepadComponent implements OnInit {
     this.notesArray.removeAt(i);
   }
 
-  onFormArraySave(i) {
-
-  }
-
   async addNote(notesFormDirective: FormGroupDirective) {
     let formVal = this.notesForm.value;
     const randomId = uuidv1();
