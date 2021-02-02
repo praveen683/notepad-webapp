@@ -39,6 +39,7 @@ export class NotepadService {
 
   getAllGist() {
     const octokit = this.getOctoKit();
-    return octokit.request('GET /users/praveen683/gists?flush_cache=true')
+    let salt = Date.now()
+    return octokit.request(`GET /users/praveen683/gists?salt=${salt}`)
   }
 }
