@@ -15,8 +15,10 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
 export class NotepadComponent implements OnInit {
   notepadForm: FormGroup;
   notesForm: FormGroup;
-  notesFormArray: any;
+  notesFormArray: FormGroup;
+
   custom_validation_messages = Custom_Validation_Messages;
+
   notepadData = [];
   currentNavState;
   notepadId;
@@ -55,10 +57,11 @@ export class NotepadComponent implements OnInit {
   async getGistData(id) {
     const response = await this.notepadService.getData(id);
     this.localStorageService.setGistDataById(id, response);
+
     if(this.notesArray.controls.length > 0 ) {
-      this.notesArray.controls.forEach((ele , i) => {
-        this.removeNoteFromArray(i)
-      });
+      while (this.notesArray.controls.length !== 0) {
+        this.removeNoteFromArray(0);
+      }
     }
     this.parseGistData(response);
   }
@@ -107,10 +110,6 @@ export class NotepadComponent implements OnInit {
     }, 0);
   }
 
-  deleteNote(id) {
-    this.notepadData = this.notepadData.filter(obj => obj.id !== id);
-  }
-
   async saveNotepad() {
     let req = { name: '', notes: [] };
     let formArrVal = this.notesFormArray.value;
@@ -125,7 +124,8 @@ export class NotepadComponent implements OnInit {
       public: true
     }
     if (this.notepadId) {
-      await this.notepadService.updateData(this.notepadId, reqBody);
+      let res = await this.notepadService.updateData(this.notepadId, reqBody);
+      this.localStorageService.setGistDataById(this.notepadId, res);
     } else {
       await this.notepadService.createGist(reqBody);
     }

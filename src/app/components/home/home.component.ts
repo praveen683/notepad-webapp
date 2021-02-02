@@ -36,6 +36,7 @@ export class HomeComponent implements OnInit {
   async allGist() {
     let res = await this.notepadService.getAllGist();
     this.notePads = [];
+    this.gistAllFiles = null;
     this.localStorageService.setAllGistData(res);
     this.gistAllFiles = res.data;
     this.parseNotePads(this.gistAllFiles);
