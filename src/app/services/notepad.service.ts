@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, Subject } from 'rxjs';
 import { Octokit } from "@octokit/core";
 
 @Injectable({
@@ -9,14 +11,14 @@ export class NotepadService {
   constructor() { }
 
   getOctoKit() {
-    return new Octokit({ auth: `1bd0f30a36d2f1c43573134a9b34c7fe30b1ae34` });
+    return new Octokit({ auth: `*************************` });
   }
 
   getData(id) {
     const octokit = this.getOctoKit();
     return octokit.request(`GET /gists/${id}`);
   }
-  
+
   updateData(id, reqBody) {
     const octokit = this.getOctoKit();
     return octokit.request(`PATCH /gists/${id}`, reqBody);
@@ -27,9 +29,13 @@ export class NotepadService {
     return octokit.request('POST /gists', reqBody)
   }
 
-  
+  deleteGist(id) {
+    const octokit = this.getOctoKit();
+    return octokit.request(`DELETE /gists/${id}`)
+  }
+
   getAllGist() {
     const octokit = this.getOctoKit();
-    return octokit.request('GET /users/praveen683/gists')
+    return octokit.request('GET /users/praveen683/gists?flush_cache=true')
   }
 }

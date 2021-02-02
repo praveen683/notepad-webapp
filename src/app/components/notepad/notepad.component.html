@@ -1,25 +1,34 @@
 <div class="main-container">
-    <mat-toolbar>
-        <mat-card-title>Notepad Application works!</mat-card-title>
-    </mat-toolbar>
+    <div>
+        <mat-toolbar>
+            <mat-card-title>Notepad Application</mat-card-title>
+            <span class="spacer"></span>
+            <div class="example-button-container">
+                <button [routerLink]="['/home']" mat-mini-fab title="Home" aria-label="back to home">
+                    <mat-icon>home</mat-icon>
+                </button>
+            </div>
+        </mat-toolbar>
+    </div>
     <mat-card>
         <form [formGroup]="notepadForm">
             <label>Notepad Title</label>
             <div fxLayout.xs="column" fxLayout="row wrap" fxLayoutGap="10px" ngClass.gt-xs="ml-10">
                 <div fxFlex.sm="0 1 calc(50%-10px)" fxFlex.md="0 1 calc(33%-10px)" fxFlex.gt-md="0 1 calc(25%-10px)">
                     <mat-form-field appearance="outline">
-                        <input matInput formControlName="name"
+                        <input matInput formControlName="name" [readonly]="notepadId?true:null"
                             placeholder="Enter notepad title..." required />
                         <mat-error class="error-message">{{ getFormErrorMessage(notepadForm, 'name') }}</mat-error>
                     </mat-form-field>
                 </div>
                 <span class="spacer"></span>
                 <div fxFlex.sm="0 1 calc(50%-10px)" fxFlex.md="0 1 calc(33%-10px)" fxFlex.gt-md="0 1 calc(25%-10px)">
-                    <button mat-button class="bt-delete" title="Delete notepad"
+                    <button mat-button class="bt-delete" title="Delete notepad" (click)="deleteNotepad()"
                         aria-label="Delete">
                         Delete
                     </button>
-                    <button mat-button class="bt-save" title="Save notepad" aria-label="Save">
+                    <button mat-button class="bt-save" title="Save notepad" (click)="saveNotepad()" aria-label="Save"
+                        [disabled]="!notesArray.valid">
                         Save
                     </button>
                 </div>
@@ -49,13 +58,55 @@
                                 </mat-error>
                             </mat-form-field>
                         </div>
-                        <button mat-button type="text" class="bt-add"
+                        <button mat-button type="text" (click)="addNote(notesFormDirective)" class="bt-add"
                             title="Add note" [disabled]="!notesForm.valid" aria-label="Add note">
                             Add
                         </button>
                     </div>
                 </div>
             </mat-card-content>
+        </form>
+
+        <form [formGroup]="notesFormArray">
+            <div formArrayName="notes">
+                <div *ngFor="let note of notesArray.controls; let i=index;">
+                    <div [formGroupName]="i">
+                        <div fxLayout.xs="column" fxLayout="row wrap" fxLayoutGap="10px" ngClass.gt-xs="ml-10">
+                            <div fxFlex.sm="0 1 calc(50%-10px)" fxFlex.md="0 1 calc(33%-10px)"
+                                fxFlex.gt-md="0 1 calc(50%-10px)">
+                                <mat-card-content>
+                                    <div>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Enter note title</mat-label>
+                                            <input matInput formControlName="title" placeholder="Enter note title..."
+                                                required />
+                                            <mat-error class="error-message">{{ getFormErrorMessage(note,'title') }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Enter Note</mat-label>
+                                            <textarea matInput formControlName="text" placeholder="Enter note..."
+                                                required></textarea>
+                                            <mat-error class="error-message">{{ getFormErrorMessage(note,'text') }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </mat-card-content>
+                            </div>
+                            <span class="spacer"></span>
+                            <div fxFlex.sm="0 1 calc(50%-10px)" fxFlex.md="0 1 calc(33%-10px)"
+                                fxFlex.gt-md="0 1 calc(25%-10px)">
+                                <button mat-button class="bt-delete" (click)="removeNoteFromArray(i)"
+                                    title="Delete note" aria-label="Delete note">
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </form>
     </mat-card>
 </div>

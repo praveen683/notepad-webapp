@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { NotepadService } from 'src/app/services/notepad.service';
 
 @Component({
@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router, private notepadService: NotepadService) { }
 
   ngOnInit(): void {
+    this.allGist();
   }
 
   addNotepad() {
@@ -24,11 +25,15 @@ export class HomeComponent implements OnInit {
   viewNotepad(notePad) {
     this.router.navigate(['notepad'], { queryParams: { id: notePad.id } });
   }
-  
+
   async allGist() {
     let res = await this.notepadService.getAllGist();
     this.gistAllFiles = res.data;
-    for (let gistFile of this.gistAllFiles) {
+    this.parseNotePads(this.gistAllFiles);
+  }
+
+  parseNotePads(gistAllFiles) {
+    for (let gistFile of gistAllFiles) {
       if (gistFile && gistFile.files && Object.values(gistFile.files).length) {
         let notePad = {};
         let gistVal: any = Object.values(gistFile.files)[0];
@@ -39,5 +44,4 @@ export class HomeComponent implements OnInit {
       }
     }
   }
-
 }

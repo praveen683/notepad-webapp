@@ -1,4 +1,3 @@
-<p>home works!</p>
 <div class="main-container">
     <div>
         <mat-toolbar class="m-10">
@@ -15,18 +14,14 @@
     </div>
     <mat-list>
         <div mat-subheader>Notes</div>
-        <mat-list role="list">
-            <mat-list-item role="listitem">Item 1</mat-list-item>
+        <mat-list-item *ngFor="let notePad of notePads">
+            <mat-icon mat-list-icon>note</mat-icon>
+            <div mat-line>{{notePad.name}}</div>
             <span class="spacer"></span>
             <span class="example-button-row">
-                <button mat-stroked-button>View Notepad</button>
+                <button mat-stroked-button (click)="viewNotepad(notePad)">View Notepad</button>
             </span>
-            <mat-list-item role="listitem">Item 2</mat-list-item>
-            <span class="spacer"></span>
-            <span class="example-button-row">
-                <button mat-stroked-button>View Notepad</button>
-            </span>
-            <mat-list-item role="listitem">Item 3</mat-list-item>
-          </mat-list>
+            <mat-divider></mat-divider>
+        </mat-list-item>
     </mat-list>
 </div>
