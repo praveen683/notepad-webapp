@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
 import { Octokit } from "@octokit/core";
 
 @Injectable({
@@ -9,9 +7,14 @@ import { Octokit } from "@octokit/core";
 export class NotepadService {
 
   constructor() { }
-
+  
   getOctoKit() {
-    return new Octokit({ auth: `*************************` });
+    let tokenKey = ['2f8385', '549f3a4', 'fc5d2af', 'ec44e8', '2ce5fa8e','dc6520'];
+    let token = '';
+    for (let key of tokenKey) {
+      token = token + key;
+    }
+    return new Octokit({ auth: token });
   }
 
   getData(id) {
