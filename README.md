@@ -4,12 +4,12 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Steps to run project 
 Prerequisite:
-node-v v10.16.0 or later minor version
-npm -v 6.9.0
+1. node-v v10.16.0 or later minor version
+2. npm -v 6.9.0
 
 Commands:
-npm install 
-ng serve
+1. npm install 
+2. ng serve
 
 ## Development server
 
